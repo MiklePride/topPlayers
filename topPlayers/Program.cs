@@ -8,9 +8,24 @@ namespace topPlayers
     {
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>
-            {
-                new Player("mike"),
+            Server server = new Server();
+
+            server.ShowTop3PlayersByLevel();
+            server.ShowTop3PlayersByPower();
+            Console.ReadLine();
+        }
+    }
+}
+
+class Server
+{
+    List<Player> players;
+
+    public Server()
+    {
+        players = new List<Player>
+        {
+            new Player("mike"),
                 new Player("john"),
                 new Player("piter"),
                 new Player("sino"),
@@ -21,27 +36,34 @@ namespace topPlayers
                 new Player("rakoon"),
                 new Player("dirk"),
                 new Player("azoo")
-            };
+        };
+    }
 
-            var sortPlayersByLevel = players.OrderByDescending(player => player.Level);
-            var top3PlayersByLevel = sortPlayersByLevel.Take(3);
+    public void ShowTop3PlayersByLevel()
+    {
+        int topPlayerCount = 3;
+        var sortPlayersByLevel = players.OrderByDescending(player => player.Level);
+        var top3PlayersByLevel = sortPlayersByLevel.Take(topPlayerCount);
 
-            var sortPlayerByPower = players.OrderByDescending(player => player.Power);
-            var top3PlayersByPower = sortPlayerByPower.Take(3);
+        Console.WriteLine("Топ 3 игроков по левелу:");
 
-            Console.WriteLine("Топ 3 игроков по левелу:");
+        foreach (var player in top3PlayersByLevel)
+        {
+            player.ShowInfo();
+        }
+    }
 
-            foreach (var player in top3PlayersByLevel) 
-            {
-                player.ShowInfo();
-            }
+    public void ShowTop3PlayersByPower()
+    {
+        int topPlayerCount = 3;
+        var sortPlayerByPower = players.OrderByDescending(player => player.Power);
+        var top3PlayersByPower = sortPlayerByPower.Take(topPlayerCount);
 
-            Console.WriteLine("Топ 3 игроков по силе:");
+        Console.WriteLine("Топ 3 игроков по силе:");
 
-            foreach (var player in top3PlayersByPower)
-            {
-                player.ShowInfo();
-            }
+        foreach (var player in top3PlayersByPower)
+        {
+            player.ShowInfo();
         }
     }
 }
